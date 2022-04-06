@@ -1,15 +1,20 @@
 import React from "react";
 import FormInput from "./FormInput";
+import AuthController from "../controllers/auth_controller";
+import User from "../models/user";
+
+const authCtrl = new AuthController();
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: "example@mail.com",
+            email: "test@mail.com",
             password: "test1234",
         };
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
+        this.login = this.login.bind(this);
     }
     handleChangeEmail(event) {
         this.setState({ email: event.target.value });
@@ -17,6 +22,18 @@ class Login extends React.Component {
 
     handleChangePassword(event) {
         this.setState({ password: event.target.value });
+    }
+
+    login() {
+        let user = new User("", this.state.email, this.state.password);
+        authCtrl.login(user).then((value) => {
+            if (value === true) {
+                location.reload();
+            }
+            if (value != null) {
+                console.log(value);
+            }
+        });
     }
 
     render() {
@@ -70,7 +87,10 @@ class Login extends React.Component {
                                 />
                             </div>
                             <div className="col-md-12">
-                                <button className="btn btn-primary w-100 fs-2">
+                                <button
+                                    onClick={this.login}
+                                    className="btn btn-primary w-100 fs-2"
+                                >
                                     Sign In
                                 </button>
                             </div>

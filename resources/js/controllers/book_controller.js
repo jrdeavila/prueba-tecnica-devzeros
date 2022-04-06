@@ -1,8 +1,13 @@
 import axios from "axios";
 import Book from "../models/book";
+import OauthConfig from "../config/oauth_constants";
+
 class BookController {
+    headers = {};
     async getBooks() {
-        let res = await axios.get(`/api/books`);
+        let res = await axios.get(`/api/books`, {
+            headers: OauthConfig.headers,
+        });
         let data = res.data;
         let status = res.status;
         if (status === 200) {
@@ -24,7 +29,9 @@ class BookController {
     }
 
     async getBook(id) {
-        let res = await axios.get(`/api/books/${id}`);
+        let res = await axios.get(`/api/books/${id}`, {
+            headers: OauthConfig.headers,
+        });
         let data = res.data;
         let status = res.status;
         if (status === 200) {
@@ -42,7 +49,9 @@ class BookController {
 
     async createBook(book) {
         try {
-            let res = await axios.post("/api/books", book.toJson());
+            let res = await axios.post("/api/books", book.toJson(), {
+                headers: OauthConfig.headers,
+            });
             let data = res.data;
             let status = res.status;
             if (status === 500) window.alert(data.error);
@@ -55,7 +64,9 @@ class BookController {
     }
     async updateBook(book) {
         try {
-            let res = await axios.put(`/api/books/${book.id}`, book.toJson());
+            let res = await axios.put(`/api/books/${book.id}`, book.toJson(), {
+                headers: OauthConfig.headers,
+            });
             let data = res.data;
             let status = res.status;
             if (status === 500 || status === 404) window.alert(data.error);
@@ -67,7 +78,9 @@ class BookController {
         }
     }
     async deleteBook(id) {
-        let res = await axios.delete(`/api/books/${id}`);
+        let res = await axios.delete(`/api/books/${id}`, {
+            headers: OauthConfig.headers,
+        });
         let data = res.data;
         let status = res.status;
         if (status === 500) {

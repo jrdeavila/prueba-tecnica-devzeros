@@ -1,3 +1,5 @@
+@props(['slot'])
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +12,7 @@
 </head>
 
 <body>
-    <div id="example"></div>
+    {{ $slot }}
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 

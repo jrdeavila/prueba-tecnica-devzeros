@@ -1,11 +1,12 @@
 class Book {
-    constructor(id, title, author, publisher, genre, price) {
+    constructor(id, title, author, publisher, genre, price, updated_at) {
         this._title = title;
         this._author = author;
         this._genre = genre;
         this._publisher = publisher;
         this._price = price;
         this._id = id;
+        this._updated_at = updated_at;
     }
 
     static fromJson(json) {

@@ -26,6 +26,7 @@ class BookController extends Controller
      *    tags={"books"},
      *    summary="List all books",
      *    description="List all books",
+     *   
      *  @OA\Response(
      *     response=200,
      *     description="Successful operation",
@@ -48,7 +49,7 @@ class BookController extends Controller
     public function index()
     {
         try {
-            $books = Book::all();
+            $books = Book::latest()->get();
             return response()->json($books, 200);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
