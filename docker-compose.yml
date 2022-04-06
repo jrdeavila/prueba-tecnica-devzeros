@@ -1,0 +1,62 @@
+version: '3.7'
+
+services:
+  # PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laravel/build 
+    container_name: app
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ./:/var/www/
+      - ./docker-compose/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    networks:
+      - prueba-tecnica-network
+
+  # Nginx Service
+  webserver:
+    image: nginx:alpine
+    volumes:
+      - ./:/var/www/
+      - ./docker-compose/nginx/conf.d/:/etc/nginx/conf.d/
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8000:80"
+      - "443:443"
+    networks:
+      - prueba-tecnica-network
+
+  # MySQL Service
+  db:
+    image: mysql:5.7.22
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./docker-compose/mysql/my.cnf:/etc/mysql/my.cnf
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - prueba-tecnica-network
+
+networks:
+  prueba-tecnica-network:
+    driver: bridge
+volumes:
+  dbdata:
+    driver: local
