@@ -22,9 +22,7 @@ _Esto instalar los paquetes necesarios para que la aplicacion funcione_
 
 Despues vamos a instalar las dependencias de node para el Frontend
 
-    npm install
-
-    npm run dev
+    npm install && npm run dev
 
 
 Ahora solo nos queda correr los contenedores de docker
@@ -61,18 +59,32 @@ Y para ello, vamos a crear un nuevo cliente de OAuth en el proyecto con el sigui
 _Esto instalara los clientes de OAuth en el proyecto_
 
 Ahora solo debemos enfocarnos en el Client ID: 2 y copiar el **Client Secret**
-
 Reemplaze y pegue la siguiente linea en el archivo *resource/js/config/oauth_constants.js*
 
-    static client_secret = 'pegue_el_nuevo_client_secret
-
-
-
-Esto es lo que nos dara acceso a los recursos del servidor.
+    static client_secret = 'pegue_el_nuevo_client_secret'
 
 
 
 
-Listo el proyecto esta corriendo correctamente
+_Esto es lo que nos dara acceso a los recursos del servidor._
+
+
+Volvemos a compilar el Frontend
+
+    npm run dev
+
+
+
+**Listo el proyecto esta corriendo correctamente**
+
+
+## Frenar la aplicacion
+
+_Si desea finalizar los procesos de la aplicacion_
+
+Ejecute el siguiete comando
+
+    docker-compose down
+
 
 
